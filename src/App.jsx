@@ -7,6 +7,7 @@ import {
   Outlet,
 } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
+import { Analytics } from '@vercel/analytics/react';
 import { queryClient } from './lib/queryClient';
 import { supabase } from './lib/supabase';
 import { useAuthStore } from './stores/authStore';
@@ -155,6 +156,7 @@ function App() {
           {/* Catch-all */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        <Analytics />
       </BrowserRouter>
     </QueryClientProvider>
   );
