@@ -1,0 +1,321 @@
+.page {
+    padding: var(--space-7);
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.greeting {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+}
+
+.date {
+    font-size: var(--font-size-base);
+    color: var(--color-text-muted);
+    margin-top: var(--space-1);
+}
+
+/* Weekly Strip */
+.weekStrip {
+    display: flex;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.weekDay {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: var(--space-4) var(--space-3);
+    border-right: 1px solid var(--color-border);
+    cursor: default;
+}
+
+.weekDay:last-child {
+    border-right: none;
+}
+
+.weekDayLabel {
+    font-size: 11px;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.weekDayNum {
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+.weekDayActive {
+    background: var(--color-surface);
+}
+
+.weekDayActive .weekDayNum {
+    color: var(--color-accent);
+}
+
+.weekDayActive .weekDayLabel {
+    color: var(--color-accent);
+}
+
+/* Stats */
+.statsRow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+}
+
+.statCard {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+}
+
+.statIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.statValue {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+}
+
+.statLabel {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-top: 2px;
+}
+
+/* 2-column layout */
+.columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sectionTitle {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+/* Empty state */
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-7);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-base);
+}
+
+/* Task list */
+.taskList {
+    display: flex;
+    flex-direction: column;
+}
+
+.taskItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--color-border);
+    transition: background var(--transition-fast);
+}
+
+.taskItem:last-child {
+    border-bottom: none;
+}
+
+.taskItem:hover {
+    background: var(--color-surface-hover);
+}
+
+.checkbox {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--color-border-strong);
+    border-radius: var(--radius-xs);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: background var(--transition-base), border-color var(--transition-base);
+}
+
+.checkbox.checked {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.taskTitle {
+    flex: 1;
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+}
+
+.taskTitle.done {
+    color: var(--color-text-muted);
+    text-decoration: line-through;
+}
+
+.taskSubject {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    background: var(--color-bg-secondary);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+}
+
+/* Notes grid */
+.notesGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+}
+
+.noteTitle {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+    line-height: var(--line-height-snug);
+}
+
+.noteSnippet {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    line-height: var(--line-height-normal);
+    margin-bottom: var(--space-3);
+}
+
+.noteDate {
+    font-size: 11px;
+    color: var(--color-text-placeholder);
+}
+
+/* Pomodoro widget */
+.pomodoroWidget {
+    position: relative;
+}
+
+.pomodoroCard {
+    width: 100%;
+}
+
+.pomodoroInner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+}
+
+.timerRing {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.pomodoroTitle {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+.pomodoroSub {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.pomodoroInner> :last-child {
+    margin-left: auto;
+}
+
+@media (max-width: 1024px) {
+    .columns {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .page {
+        padding: var(--space-5);
+    }
+
+    .header {
+        flex-direction: column;
+        gap: var(--space-4);
+    }
+
+    .weekStrip {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .weekDay {
+        min-width: 60px;
+    }
+
+    .statsRow {
+        grid-template-columns: 1fr;
+        gap: var(--space-3);
+    }
+
+    .notesGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .pomodoroInner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-3);
+    }
+
+    .pomodoroInner> :last-child {
+        margin-left: 0;
+        width: 100%;
+    }
+}

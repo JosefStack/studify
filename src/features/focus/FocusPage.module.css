@@ -1,0 +1,226 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+    padding: var(--space-7);
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.header {
+    text-align: center;
+}
+
+.title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+}
+
+.sub {
+    font-size: var(--font-size-base);
+    color: var(--color-text-muted);
+    margin-top: var(--space-1);
+}
+
+/* Mode tabs */
+.tabs {
+    display: flex;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    padding: 3px;
+    gap: 2px;
+}
+
+.tab {
+    padding: 6px 20px;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    white-space: nowrap;
+}
+
+.tab:hover {
+    color: var(--color-text-primary);
+}
+
+.tabActive {
+    background: var(--color-accent);
+    color: #fff;
+}
+
+/* Timer ring */
+.timerWrap {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ring {
+    position: absolute;
+    inset: 0;
+}
+
+.ringTrack {
+    stroke: var(--color-border);
+}
+
+.ringProgress {
+    stroke: var(--color-accent);
+    filter: drop-shadow(0 0 6px var(--color-accent));
+    transition: stroke-dashoffset 0.8s ease;
+}
+
+.timerInner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.timerDisplay {
+    font-size: 48px;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    letter-spacing: -2px;
+    font-variant-numeric: tabular-nums;
+}
+
+.pomodoroInfo {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+}
+
+.controlBtn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: background var(--transition-base), color var(--transition-base);
+}
+
+.controlBtn:hover {
+    background: var(--color-surface-hover);
+    color: var(--color-text-primary);
+}
+
+.playBtn {
+    min-width: 120px;
+}
+
+/* Study card */
+.studyCard {
+    width: 100%;
+}
+
+.studyLabel {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-3);
+}
+
+.studyInput {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    outline: none;
+    font-family: var(--font-family);
+}
+
+.studyInput::placeholder {
+    color: var(--color-text-placeholder);
+}
+
+/* Stats */
+.statsRow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+    width: 100%;
+}
+
+.statChip {
+    text-align: center;
+}
+
+.statVal {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+}
+
+.statKey {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-top: 2px;
+}
+
+@media (max-width: 768px) {
+    .page {
+        padding: var(--space-5);
+        gap: var(--space-5);
+    }
+
+    .timerWrap {
+        width: 180px;
+        height: 180px;
+    }
+
+    .timerDisplay {
+        font-size: 36px;
+    }
+
+    .controls {
+        gap: var(--space-4);
+    }
+
+    .playBtn {
+        min-width: 100px;
+    }
+
+    .statsRow {
+        grid-template-columns: 1fr;
+    }
+
+    .statChip {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--space-3) 0;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .statChip:last-child {
+        border-bottom: none;
+    }
+
+    .statVal {
+        font-size: var(--font-size-lg);
+    }
+}

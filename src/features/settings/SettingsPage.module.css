@@ -1,0 +1,124 @@
+.page {
+    padding: var(--space-7);
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+}
+
+.title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+}
+
+/* Section */
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--color-text-muted);
+}
+
+.sectionTitle {
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+/* Profile */
+.profileRow {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-6);
+    margin-bottom: var(--space-5);
+}
+
+.profileFields {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.profileActions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Divider */
+.divider {
+    height: 1px;
+    background: var(--color-border);
+    margin: var(--space-1) 0;
+}
+
+/* Stepper row */
+.stepperRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    padding: var(--space-4) 0;
+}
+
+.stepperLabel {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+}
+
+.stepperDesc {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-top: 2px;
+}
+
+.stepper {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-shrink: 0;
+}
+
+.stepBtn {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    font-size: var(--font-size-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition-base);
+}
+
+.stepBtn:hover {
+    background: var(--color-surface-hover);
+}
+
+.stepVal {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    min-width: 56px;
+    text-align: center;
+}
+
+/* Account row */
+.accountRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    padding: var(--space-4) 0;
+}

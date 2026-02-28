@@ -1,0 +1,37 @@
+.avatar {
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.sm {
+    width: 28px;
+    height: 28px;
+}
+
+.md {
+    width: 36px;
+    height: 36px;
+}
+
+.lg {
+    width: 48px;
+    height: 48px;
+}
+
+.img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.initials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+}
