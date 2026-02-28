@@ -7,26 +7,39 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
+
+# Build output
 dist
 dist-ssr
-*.local
 
-# Environment variables - NEVER commit these
+# Environment variables — NEVER commit these
 .env
 .env.local
 .env.production
+.env.*.local
 
-# Local scripts with credentials
+# Local dev scripts with credentials
 find_user.cjs
+*.cjs
 
-# Editor directories and files
+# TypeScript config (orphan from migration)
+tsconfig*.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor directories
 .vscode/*
 !.vscode/extensions.json
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Misc
+*.local
