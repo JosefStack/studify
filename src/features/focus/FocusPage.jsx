@@ -121,7 +121,7 @@ export default function FocusPage() {
 
             {/* Timer ring */}
             <div className={styles.timerWrap}>
-                <svg width="220" height="220" viewBox="0 0 220 220" className={styles.ring}>
+                <svg viewBox="0 0 220 220" className={styles.ring}>
                     <circle cx="110" cy="110" r={radius} className={styles.ringTrack} strokeWidth="8" fill="none" />
                     <circle
                         cx="110" cy="110" r={radius}

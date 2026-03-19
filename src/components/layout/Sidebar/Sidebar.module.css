@@ -13,15 +13,30 @@
     overflow-y: auto;
     overflow-x: hidden;
     padding: var(--space-4) var(--space-3);
+    transition: width var(--transition-slow), min-width var(--transition-slow);
 }
 
-/* Logo */
+/* Collapsed state */
+.sidebar.collapsed {
+    width: var(--sidebar-collapsed-width);
+    min-width: var(--sidebar-collapsed-width);
+}
+
+/* Logo row */
+.logoRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-4);
+    margin-bottom: var(--space-4);
+    min-height: 36px;
+}
+
 .logo {
     display: flex;
     align-items: center;
     gap: var(--space-3);
-    padding: var(--space-3) var(--space-4);
-    margin-bottom: var(--space-4);
+    overflow: hidden;
 }
 
 .logoMark {
@@ -42,6 +57,47 @@
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-primary);
+    white-space: nowrap;
+}
+
+.toggleBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+.toggleBtn:hover {
+    background: var(--color-surface-hover);
+    color: var(--color-text-primary);
+}
+
+.desktopToggleIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobileToggleIcon {
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Collapsed: center the toggle */
+.collapsed .logoRow {
+    justify-content: center;
+    padding: var(--space-3) 0;
+}
+
+.collapsed .logo {
+    display: none;
 }
 
 /* Nav links */
@@ -64,6 +120,8 @@
     transition: background-color var(--transition-base), color var(--transition-base);
     cursor: pointer;
     text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .navItem:hover {
@@ -75,6 +133,16 @@
     background: var(--color-surface);
     color: var(--color-text-primary);
     box-shadow: var(--shadow-xs);
+}
+
+/* Collapsed: center the icon */
+.collapsed .navItem {
+    justify-content: center;
+    padding: 8px;
+}
+
+.collapsed .navText {
+    display: none;
 }
 
 /* Bottom section */
@@ -100,11 +168,18 @@
     transition: background-color var(--transition-base), color var(--transition-base);
     width: 100%;
     text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .themeBtn:hover {
     background: var(--color-surface-hover);
     color: var(--color-text-primary);
+}
+
+.collapsed .themeBtn {
+    justify-content: center;
+    padding: 8px;
 }
 
 /* User row */
@@ -115,6 +190,18 @@
     padding: var(--space-3) var(--space-3);
     margin-top: var(--space-2);
     border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.collapsed .userRow {
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-3) 0;
+    gap: var(--space-4);
+}
+
+.collapsed .userInfo {
+    display: none;
 }
 
 .userInfo {
@@ -152,4 +239,63 @@
 .logoutBtn:hover {
     color: var(--color-danger);
     background: var(--color-danger-light);
+}
+
+/* ─── Mobile / Tablet ──────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform var(--transition-slow), width var(--transition-slow);
+        z-index: 1100;
+        width: var(--sidebar-width);
+        min-width: var(--sidebar-width);
+    }
+
+    .sidebar.mobileOpen {
+        transform: translateX(0);
+    }
+
+    /* Never show collapsed state on mobile — always full width */
+    .sidebar.collapsed {
+        width: var(--sidebar-width);
+        min-width: var(--sidebar-width);
+    }
+
+    .collapsed .logo {
+        display: flex;
+    }
+
+    .collapsed .logoRow {
+        justify-content: space-between;
+        padding: var(--space-3) var(--space-4);
+    }
+
+    .collapsed .navItem {
+        justify-content: flex-start;
+        padding: 8px 12px;
+    }
+
+    .collapsed .themeBtn {
+        justify-content: flex-start;
+        padding: 8px 12px;
+    }
+
+    .collapsed .userRow {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: var(--space-3) var(--space-3);
+    }
+
+    .collapsed .navText,
+    .collapsed .userInfo {
+        display: block;
+    }
+
+    .desktopToggleIcon {
+        display: none;
+    }
+
+    .mobileToggleIcon {
+        display: flex;
+    }
 }

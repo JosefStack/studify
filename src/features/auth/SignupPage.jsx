@@ -19,17 +19,32 @@ export default function SignupPage() {
     const handleSignup = async (e) => {
         e.preventDefault();
         setError('');
+
+        const trimmedName = fullName.trim();
+        const trimmedEmail = email.trim().toLowerCase();
+
+        // Client-side validation
+        if (!trimmedName || trimmedName.length < 2) {
+            setError('Please enter your full name (at least 2 characters).');
+            return;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(trimmedEmail)) {
+            setError('Please enter a valid email address.');
+            return;
+        }
         if (password.length < 6) {
             setError('Password must be at least 6 characters.');
             return;
         }
+
         setLoading(true);
 
         const { error: err } = await supabase.auth.signUp({
-            email,
+            email: trimmedEmail,
             password,
             options: {
-                data: { full_name: fullName },
+                data: { full_name: trimmedName },
                 emailRedirectTo: `${window.location.origin}/`,
             },
         });

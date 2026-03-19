@@ -12,12 +12,78 @@
     flex-direction: column;
     overflow-x: hidden;
     padding-bottom: 0;
+    transition: margin-left var(--transition-slow);
 }
 
+/* Collapsed sidebar — adjust margin */
+.sidebarCollapsed .main {
+    margin-left: var(--sidebar-collapsed-width);
+}
+
+/* Mobile hamburger */
+.mobileToggle {
+    display: none;
+    position: fixed;
+    top: var(--space-4);
+    left: var(--space-4);
+    z-index: 200;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    color: var(--color-text-primary);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background var(--transition-base);
+}
+
+.mobileToggle:hover {
+    background: var(--color-surface-hover);
+}
+
+/* Overlay backdrop */
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+    z-index: 1050;
+}
+
+/* Mobile: make sidebar open via mobileOpen class */
+.sidebarMobileOpen aside {
+    transform: translateX(0) !important;
+}
+
+/* ─── Responsive ───────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
     .main {
         margin-left: 0;
         padding-bottom: 80px;
-        /* Space for bottom nav */
+        padding-top: 56px;
+        /* Space for hamburger */
+    }
+
+    .sidebarCollapsed .main {
+        margin-left: 0;
+    }
+
+    .mobileToggle {
+        display: flex;
+    }
+
+    .overlay {
+        display: block;
+    }
+}
+
+/* Tablet breakpoint: allow collapsed sidebar */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .sidebarCollapsed .main {
+        margin-left: var(--sidebar-collapsed-width);
     }
 }

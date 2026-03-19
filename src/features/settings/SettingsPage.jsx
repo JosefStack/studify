@@ -18,8 +18,61 @@ export default function SettingsPage() {
 
     const [name, setName] = useState(profile?.full_name ?? '');
     const [savingProfile, setSavingProfile] = useState(false);
+    const [uploadingAvatar, setUploadingAvatar] = useState(false);
 
     useEffect(() => { setName(profile?.full_name ?? ''); }, [profile]);
+
+    const handleAvatarClick = () => {
+        document.getElementById('avatar-upload').click();
+    };
+
+    const handleAvatarChange = async (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+        const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+
+        if (!cloudName || !uploadPreset || cloudName === 'your_cloud_name') {
+            alert('Cloudinary keys are not configured. Please check your .env file.');
+            return;
+        }
+
+        try {
+            setUploadingAvatar(true);
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', uploadPreset);
+
+            const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+                method: 'POST',
+                body: formData,
+            });
+            const data = await res.json();
+
+            if (data.secure_url) {
+                // Update Supabase profile
+                const { data: updatedProfile, error } = await supabase
+                    .from('profiles')
+                    .update({ avatar_url: data.secure_url })
+                    .eq('id', user.id)
+                    .select()
+                    .single();
+
+                if (error) throw error;
+                if (updatedProfile) {
+                    setProfile(updatedProfile);
+                }
+            } else {
+                throw new Error(data.error?.message || 'Upload failed');
+            }
+        } catch (error) {
+            console.error('Error uploading avatar:', error);
+            alert('Failed to upload avatar: ' + error.message);
+        } finally {
+            setUploadingAvatar(false);
+        }
+    };
 
     // User settings from DB
     const { data: settings } = useQuery({
@@ -65,7 +118,19 @@ export default function SettingsPage() {
                 </div>
                 <Card padding="lg">
                     <div className={styles.profileRow}>
-                        <Avatar src={profile?.avatar_url} name={profile?.full_name} size="lg" />
+                        <div className={styles.avatarWrap} onClick={handleAvatarClick}>
+                            <Avatar src={profile?.avatar_url} name={profile?.full_name} size="lg" />
+                            <div className={styles.avatarOverlay}>
+                                {uploadingAvatar ? '...' : 'Edit'}
+                            </div>
+                            <input
+                                id="avatar-upload"
+                                type="file"
+                                accept="image/*"
+                                style={{ display: 'none' }}
+                                onChange={handleAvatarChange}
+                            />
+                        </div>
                         <div className={styles.profileFields}>
                             <Input label="Full Name" value={name} onChange={(e) => setName(e.target.value)} />
                             <Input label="Email" value={user?.email ?? ''} disabled hint="Email cannot be changed here." />

@@ -1,6 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import { format, startOfWeek, addDays, isToday } from 'date-fns';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { CheckSquare, Calendar, Flame, Plus, Clock } from 'lucide-react';
 import { Card } from '../../components/Card/Card';
 import { Badge } from '../../components/Badge/Badge';
@@ -21,24 +23,32 @@ function getWeekDays(anchor) {
 export default function DashboardPage() {
     const { user, profile } = useAuthStore();
     const queryClient = useQueryClient();
-    const today = new Date();
-    const weekDays = useMemo(() => getWeekDays(today), []);
+
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const weekDays = useMemo(() => getWeekDays(selectedDate), [selectedDate]);
+
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const firstName = profile?.full_name?.split(' ')[0] ?? 'Student';
-    const hour = today.getHours();
+    const hour = new Date().getHours();
     const greeting =
         hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
 
-    // Fetch today's tasks
-    const todayStr = format(today, 'yyyy-MM-dd');
+    // Fetch tasks for the selected date
+    const selectedDateStr = format(selectedDate, 'yyyy-MM-dd');
     const { data: tasks = [] } = useQuery({
-        queryKey: ['tasks', user?.id, 'today'],
+        queryKey: ['tasks', user?.id, selectedDateStr],
         queryFn: async () => {
             const { data, error } = await supabase
                 .from('tasks')
                 .select('*')
                 .eq('user_id', user.id)
-                .eq('due_date', todayStr)
+                .eq('due_date', selectedDateStr)
                 .order('created_at', { ascending: false });
             if (error) throw error;
             return data ?? [];
@@ -55,7 +65,7 @@ export default function DashboardPage() {
                 .select('*')
                 .eq('user_id', user.id)
                 .neq('status', 'done')
-                .gt('due_date', todayStr)
+                .gt('due_date', selectedDateStr)
                 .order('due_date', { ascending: true })
                 .limit(5);
             if (error) throw error;
@@ -82,7 +92,7 @@ export default function DashboardPage() {
 
     const doneToday = tasks.filter((t) => t.status === 'done').length;
     const overdueCount = upcomingTasks.filter(
-        (t) => t.due_date && t.due_date < todayStr
+        (t) => t.due_date && t.due_date < selectedDateStr
     ).length;
 
     // Toggle task done
@@ -100,22 +110,37 @@ export default function DashboardPage() {
                     <h1 className={styles.greeting}>
                         {greeting}, {firstName} 👋
                     </h1>
-                    <p className={styles.date}>{format(today, 'EEEE, MMMM d, yyyy')}</p>
+                    <div className={styles.dateSelector}>
+                        <p className={styles.date}>{format(selectedDate, 'EEEE, MMMM d, yyyy')}</p>
+                        <DatePicker
+                            selected={selectedDate}
+                            onChange={(date) => {
+                                if (date) setSelectedDate(date);
+                            }}
+                            customInput={
+                                <button className={styles.calendarWrap} aria-label="Select Date">
+                                    <Calendar size={18} className={styles.calendarIcon} strokeWidth={2} />
+                                </button>
+                            }
+                            popperPlacement={isMobile ? "bottom-start" : "bottom-end"}
+                        />
+                    </div>
                 </div>
             </div>
 
             {/* Weekly Calendar Strip */}
             <div className={styles.weekStrip}>
                 {weekDays.map((day) => {
-                    const active = isToday(day);
+                    const active = format(day, 'yyyy-MM-dd') === selectedDateStr;
                     return (
-                        <div
+                        <button
                             key={day.toISOString()}
                             className={[styles.weekDay, active ? styles.weekDayActive : ''].filter(Boolean).join(' ')}
+                            onClick={() => setSelectedDate(day)}
                         >
                             <span className={styles.weekDayLabel}>{format(day, 'EEE')}</span>
                             <span className={styles.weekDayNum}>{format(day, 'd')}</span>
-                        </div>
+                        </button>
                     );
                 })}
             </div>
@@ -156,7 +181,9 @@ export default function DashboardPage() {
                 {/* Today's Tasks */}
                 <section className={styles.section}>
                     <div className={styles.sectionHeader}>
-                        <h2 className={styles.sectionTitle}>Today's Tasks</h2>
+                        <h2 className={styles.sectionTitle}>
+                            {selectedDateStr === format(new Date(), 'yyyy-MM-dd') ? "Today's Tasks" : "Tasks for " + format(selectedDate, 'MMM d')}
+                        </h2>
                         <Button variant="ghost" size="sm" leftIcon={<Plus size={14} />} onClick={() => window.location.assign('/tasks')}>
                             Add
                         </Button>
@@ -165,7 +192,7 @@ export default function DashboardPage() {
                         {tasks.length === 0 ? (
                             <div className={styles.empty}>
                                 <CheckSquare size={24} color="var(--color-text-muted)" />
-                                <p>No tasks due today</p>
+                                <p>No tasks for this day</p>
                                 <Button variant="secondary" size="sm" onClick={() => window.location.assign('/tasks')}>
                                     Add a task
                                 </Button>

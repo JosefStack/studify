@@ -18,9 +18,21 @@ export default function LoginPage() {
     const handleLogin = async (e) => {
         e.preventDefault();
         setError('');
+
+        const trimmedEmail = email.trim().toLowerCase();
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(trimmedEmail)) {
+            setError('Please enter a valid email address.');
+            return;
+        }
+
         setLoading(true);
 
-        const { error: err } = await supabase.auth.signInWithPassword({ email, password });
+        const { error: err } = await supabase.auth.signInWithPassword({
+            email: trimmedEmail,
+            password,
+        });
         if (err) {
             setError(err.message);
         } else {

@@ -132,3 +132,32 @@
 .switchLink:hover {
     opacity: 0.8;
 }
+
+/* ─── Mobile ────────────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+    .page {
+        padding: var(--space-4);
+        align-items: flex-start;
+        padding-top: var(--space-8);
+    }
+
+    .card {
+        padding: var(--space-6) var(--space-5);
+        border: none;
+        box-shadow: none;
+        background: transparent;
+    }
+
+    .heading {
+        font-size: var(--font-size-xl);
+    }
+
+    .subheading {
+        font-size: var(--font-size-base);
+    }
+
+    .logoMark {
+        width: 32px;
+        height: 32px;
+    }
+}

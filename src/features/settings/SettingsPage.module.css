@@ -40,6 +40,32 @@
     margin-bottom: var(--space-5);
 }
 
+.avatarWrap {
+    position: relative;
+    cursor: pointer;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.avatarOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.avatarWrap:hover .avatarOverlay {
+    opacity: 1;
+}
+
 .profileFields {
     flex: 1;
     display: flex;
@@ -121,4 +147,43 @@
     justify-content: space-between;
     gap: var(--space-5);
     padding: var(--space-4) 0;
+}
+
+/* ──────────────── Mobile Layout Overrides ──────────────── */
+@media (max-width: 768px) {
+    .page {
+        padding: var(--space-5);
+    }
+
+    .profileRow {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: var(--space-4);
+    }
+
+    .profileActions {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .profileActions button {
+        width: 100%;
+    }
+
+    .stepperRow,
+    .accountRow {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-3);
+    }
+
+    .stepper {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .accountRow button {
+        width: 100%;
+    }
 }
